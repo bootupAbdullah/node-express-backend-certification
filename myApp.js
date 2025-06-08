@@ -1,58 +1,32 @@
 let express = require('express');
 let app = express();
-require('dotenv').config()
 
+console.log("Hello World")
 
-console.log("Hello World");
+absolutePath = __dirname + '/views/index.html'
+publicDirPath = __dirname + '/public'
 
-let absolutePath = __dirname + '/views/index.html';
-let publicDir = __dirname + '/public';
-
-// app.get("/", function(req, res) {
-//     res.send("Hello Express")
+// Initial tets
+// app.get("/", function(req, res){
+//     res.send('Hello Express');
 // })
 
-app.use('/public', express.static(publicDir));
+//!! Serve Static Assets Using Middleware
+// app.use(path, middlewareFunction)
+//express.static(path)
 
-app.use("/", function(req, res, next) {
-    console.log(req.method +  " " + req.path + " - " + req.ip)
-    next();
-});
-
+app.use("/public", express.static(publicDirPath))
 
 app.get("/", function(req, res) {
     res.sendFile(absolutePath)
-});
-
-app.get("/", function(req, res, next) {
-    console.log(req.method + req.path + req.ip)
-    next();
 })
 
-app.get("/json", function(req, res) {
+//!!Serve JSON on a Specific Route
+app.get("/json", function(req,res){
+    res.json({"message": "Hello json"})
+})
 
-    if (process.env.MESSAGE_STYLE === "uppercase") {
-        res.json({
-            "message" : "HELLO JSON"
-        })
-    } else {
-        res.json({
-            "message" : "Hello json"
-        })
-    }
-
-});
-
-
-
-
-
-
-
-
-
-
-
+//!!Use the .env File
 
 
 
